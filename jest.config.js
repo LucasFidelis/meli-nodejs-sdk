@@ -1,8 +1,8 @@
 module.exports = {
-  roots: ['<rootDir>/src'],
+  roots: ['<rootDir>/tests'],
   clearMocks: true,
   testEnvironment: 'node',
   transform: {
     '.+\\.ts$': 'ts-jest'
   }
-};
+}
