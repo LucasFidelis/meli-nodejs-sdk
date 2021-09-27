@@ -8,6 +8,11 @@ export class ItemsApi {
     this.apiClient = apiClient
   }
 
+  /**
+   * Gets an item by ID
+   * @param {string} id
+   * @returns {Promise<ApiResponse>}
+   */
   async getItemById (id: string): Promise<ApiResponse> {
     const url = `/items/${id}`
     return await this.apiClient.callApi({

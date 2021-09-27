@@ -14,12 +14,20 @@ export class ApiClient {
     this.request = superagent(this.baseUrl)
   }
 
+  /**
+   * Sets up the authorization token in the header
+   */
   addAuthToRequest (): void {
     if (this.accessToken !== '') {
       void this.request.set('Authorization', `Bearer ${this.accessToken}`)
     }
   }
 
+  /**
+   * Calls the endpoint and return a Promise of ApiResponse with the MercadoLibre Api response
+   * @param {ApiRequest} apiRequest
+   * @returns {Promise<ApiResponse>}
+   */
   async callApi (apiRequest: ApiRequest): Promise<ApiResponse> {
     this.request.method = apiRequest.method
 
