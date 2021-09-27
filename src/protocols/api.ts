@@ -3,7 +3,7 @@ import { URLSearchParams } from 'url'
 export interface ApiRequest {
   path: string
   method: string
-  queryParams: URLSearchParams
+  queryParams?: URLSearchParams
 }
 
 export interface ApiResponse {
