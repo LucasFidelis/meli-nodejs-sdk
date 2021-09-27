@@ -24,7 +24,7 @@ export class ApiClient {
   }
 
   /**
-   * Calls the endpoint and return a Promise of ApiResponse with the MercadoLibre Api response
+   * Calls the endpoint and return a Promise of ApiResponse with the MercadoLibre API response
    * @param {ApiRequest} apiRequest
    * @returns {Promise<ApiResponse>}
    */
