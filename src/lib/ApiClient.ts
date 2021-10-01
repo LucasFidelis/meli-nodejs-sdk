@@ -1,26 +1,16 @@
 import superagent, { SuperAgentRequest } from 'superagent'
 import { ApiRequest, ApiResponse } from '../protocols/api'
+import fs from 'fs'
 
 export class ApiClient {
   private readonly accessToken: string
   private readonly baseUrl: string
-  private request: SuperAgentRequest
 
   constructor (
     accessToken = ''
   ) {
     this.accessToken = accessToken
     this.baseUrl = 'https://api.mercadolibre.com'
-    this.request = superagent(this.baseUrl)
-  }
-
-  /**
-   * Sets up the authorization token in the header
-   */
-  addAuthToRequest (): void {
-    if (this.accessToken !== '') {
-      void this.request.set('Authorization', `Bearer ${this.accessToken}`)
-    }
   }
 
   /**
@@ -29,21 +19,27 @@ export class ApiClient {
    * @returns {Promise<ApiResponse>}
    */
   async callApi (apiRequest: ApiRequest): Promise<ApiResponse> {
-    this.request.method = apiRequest.method
 
-    this.request.url = `${this.baseUrl}${apiRequest.path}`
+    const request = superagent(this.baseUrl)
 
-    this.addAuthToRequest()
+    request.method = apiRequest.method
 
-    if (apiRequest.queryParams) {
-      await this.request.query(apiRequest.queryParams.toString())
+    request.url = `${this.baseUrl}${apiRequest.path}`
+
+    if (this.accessToken !== '') {
+      request.auth(this.accessToken, { type: "bearer" })
     }
 
-    await this.request.send()
+    if (apiRequest.queryParams) {
+      let queryParamsString = apiRequest.queryParams.toString()
+      request.url = `${request.url}?${queryParamsString}`
+    }
+    
+    await request.send()
 
     return {
-      statusCode: (await this.request).statusCode,
-      body: (await this.request).body
+      statusCode: (await request).statusCode,
+      body: (await request).body
     }
   }
 }
