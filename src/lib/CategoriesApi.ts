@@ -1,0 +1,24 @@
+import { URLSearchParams } from 'url'
+import { ApiResponse } from '../protocols/api'
+import { ApiClient } from './ApiClient'
+
+export class CategoriesApi {
+  private readonly apiClient: ApiClient
+
+  constructor (apiClient: ApiClient) {
+    this.apiClient = apiClient
+  }
+
+  /**
+   * Gets details of a category by ID
+   * @param {string} id
+   * @returns {Promise<ApiResponse>}
+   */
+  async getDetailsById (id: string): Promise<ApiResponse> {
+    const url = `/categories/${id}`
+    return await this.apiClient.callApi({
+      path: url,
+      method: 'GET'
+    })
+  }  
+}
