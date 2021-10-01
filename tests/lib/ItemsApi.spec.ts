@@ -3,6 +3,8 @@ import { ItemsApi } from '../../src/lib/ItemsApi'
 import dotenv from 'dotenv'
 dotenv.config()
 
+const SELLER_ID = process.env.SELLER_ID ?? ''
+
 describe('ItemsApi', () => {
   describe('getItemById', () => {
     it('Should return 200 and a data object in the body with a property id', async () => {
@@ -18,18 +20,18 @@ describe('ItemsApi', () => {
     it('Should return 200', async () => {
       const apiClient = new ApiClient(process.env.TOKEN)
       const itemsApi = new ItemsApi(apiClient)
-      const response = await itemsApi.getItemsIdByUserIdWithScan(process.env.SELLER_ID)
+      const response = await itemsApi.getItemsIdByUserIdWithScan(SELLER_ID)
       expect(response.statusCode).toBe(200)
     })
     
-    it('Should seeks diferents products', async () => {
+    it('Should seeks different products', async () => {
       const apiClient = new ApiClient(process.env.TOKEN)
       const itemsApi = new ItemsApi(apiClient)
-      const { body } = await itemsApi.getItemsIdByUserIdWithScan(process.env.SELLER_ID)
+      const { body } = await itemsApi.getItemsIdByUserIdWithScan(SELLER_ID)
       const scrollId = body.scroll_id
       const firstProduct = body.results[0]
-      await itemsApi.getItemsIdByUserIdWithScan(process.env.SELLER_ID, scrollId)
-      const secondProcut = (await itemsApi.getItemsIdByUserIdWithScan(process.env.SELLER_ID, scrollId)).body.results;
+      await itemsApi.getItemsIdByUserIdWithScan(SELLER_ID, scrollId)
+      const secondProcut = (await itemsApi.getItemsIdByUserIdWithScan(SELLER_ID, scrollId)).body.results;
       expect(firstProduct).not.toEqual(secondProcut)
     })
     
