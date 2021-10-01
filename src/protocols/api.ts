@@ -1,5 +1,3 @@
-import { URLSearchParams } from 'url'
-
 export interface ApiRequest {
   path: string
   method: string
