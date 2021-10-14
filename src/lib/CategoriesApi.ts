@@ -20,5 +20,13 @@ export class CategoriesApi {
       path: url,
       method: 'GET'
     })
-  }  
+  }
+
+  async getCategoriesBySite (site: string): Promise<ApiResponse> {
+    const url = `/sites/${site}/categories`
+    return await this.apiClient.callApi({
+      path: url,
+      method: 'GET'
+    })
+  }
 }
