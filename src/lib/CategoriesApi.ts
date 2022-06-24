@@ -1,8 +1,8 @@
 import { URLSearchParams } from 'url'
-import { ApiResponse } from '../protocols/api'
+import { ApiResponse, CategoryMeli } from '../protocols'
 import { ApiClient } from './ApiClient'
 
-export class CategoriesApi {
+export class CategoriesApi implements CategoryMeli {
   private readonly apiClient: ApiClient
 
   constructor (apiClient: ApiClient) {
